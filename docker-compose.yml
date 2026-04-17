@@ -1,0 +1,18 @@
+services:
+
+  redis:
+    image: redis:alpine
+
+  app:
+    build: ./app
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - app
